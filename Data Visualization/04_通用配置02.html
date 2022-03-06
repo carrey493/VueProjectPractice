@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通用配置02</title>
+    <!-- 步骤1:引入echarts.js文件 -->
+    <script src="lib/echarts.js"></script>
+</head>
+
+<body>
+    <!-- 步骤2:准备一个呈现图表的盒子 -->
+    <div style="width: 600px;height: 400px;"></div>
+
+    <script>
+        //参数，dom元素，决定图表的最终呈现的位置
+        // 步骤3:初始化echarts实例对象步骤
+        var myCharts = echarts.init(document.querySelector('div'))
+        var xDataArr = ['杰斯', '伊泽', '亚托', '维尔', '凯特', '沃里', '婕拉', '雷克']
+        var yDataArr = [88, 92, 63, 74, 94, 85, 72, 96]
+        // 步骤4∶准备配置项
+        var option = {
+            title: {
+                text: '成绩展示',
+                textStyle: {
+                    color: 'orange'
+                },
+                borderWidth: 5,
+                borderColor: 'red',
+                borderRadius: 5,
+                left: 30,
+                top: 10
+            },
+            tooltip: {
+                // trigger:'item'
+                trigger: 'axis',
+                triggerOn: 'click',
+                // formatter:'{b}的成绩是:{c}'
+                formatter: function (arg) {
+                    console.log(arg);
+                    return arg[0].name + '的分数是：' + arg[0].data
+                }
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}, //导出图片
+                    dataView: {}, //数据视图
+                    restore: {}, //重置
+                    dataZoom: {}, //区域缩放
+                    magicType: {
+                        type: [
+                            'bar',
+                            'line'
+                        ]
+                    }//动态图表类型切换
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: xDataArr
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '语文成绩',
+                    type: 'bar',
+                    markPoint: {
+                        data: [
+                            {
+                                type: 'max', name: '最大值'
+                            },
+                            {
+                                type: 'min', name: '最小值'
+                            }
+                        ]
+                    },
+                    markLine: {
+                        data: [
+                            {
+                                type: 'average', name: '平均值'
+                            }
+                        ]
+                    },
+                    label: {
+                        show: true,
+                        rotate: 60,
+                        position: 'top'
+                    },
+                    barWidth: '30%',
+                    data: yDataArr
+                }
+            ]
+        }
+        // 步骤5:将配置项设置给echarts实例对象
+        myCharts.setOption(option)
+    </script>
+</body>
+
+</html>

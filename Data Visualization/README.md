@@ -81,14 +81,31 @@ ECharts能满足绝大多数可视化图表实现
 - 雷达图
 - 仪表盘图
 
+通用配置：指的是任何图表都能使用的配置
+
+- 标题:title
+  - 文字样式：textStyle
+  - 标题边框：borderWidth,borderColor,borderRadius
+  - 标题位置：left,top,right,bottom
+- 提示：tooltip ==>提示框组件，用于配置鼠标滑过或点击图标时的显示框
+  - 触发类型：trigger ==> item axis
+  - 触发时机：triggerOn
+  - 格式化：formatter
+- 工具按钮：toolbox ==>ECharts提供的工具栏
+  - 内置有导出图片，数据视图，动态类型切换，数据区域缩放，重置五个工具
+  - 显示工具栏按钮 ：feature
+- 图例：legend ：用于筛选系列，需要和series配合使用
+  - legend中的data是一个数据
+  - lengend中的data的值需要和series数组中的某组数据的name一致
+
 ### 1.柱状图
 
 #### 1.步骤
 
 - ECharts最基本的代码结构;引入js文件，DOM容器，初始化对象，设置option
-- x轴数据：
-- y轴数据：
-- 图表类型;type==>bar
+- x轴数据：['杰斯', '伊泽', '亚托', '维尔', '凯特', '沃里', '婕拉', '雷克']
+- y轴数据：[88, 92, 63, 74, 94, 85, 72, 96]
+- 图表类型：type==>bar
 
 #### 2.常见效果
 
