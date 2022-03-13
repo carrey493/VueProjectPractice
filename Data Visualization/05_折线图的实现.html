@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>折线图的实现</title>
+    <!-- 步骤1:引入echarts.js文件 -->
+    <script src="lib/echarts.js"></script>
+</head>
+
+<body>
+    <!-- 步骤2:准备一个呈现图表的盒子 -->
+    <div style="width: 600px;height: 400px;"></div>
+
+    <script>
+        //参数，dom元素，决定图表的最终呈现的位置
+        // 步骤3:初始化echarts实例对象步骤
+        var myCharts = echarts.init(document.querySelector('div'))
+        // 步骤4∶准备配置项
+        var xDataArr = ['1', '2', '3', '4', '5', '6', '7', '8']
+        var yDataArr = [880, 920, 630, 740, 940, 850, 720, 960]
+        var option = {
+            title: {
+                text: '销量统计',
+                textStyle: {
+                    color: 'blue'
+                }
+            },
+            xAxis: {
+                type: 'category',//类目轴
+                data: xDataArr
+            },
+            yAxis: {
+                type: 'value'//数值轴
+            },
+            series: [
+                {
+                    name: '销量统计',
+                    type: 'line',
+                    data: yDataArr
+                }
+            ]
+        }
+        // 步骤5:将配置项设置给echarts实例对象
+        myCharts.setOption(option)
+    </script>
+</body>
+
+</html>
