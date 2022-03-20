@@ -134,6 +134,32 @@ ECharts能满足绝大多数可视化图表实现
 
 折线图常用来分析数据随时间变化的趋势。
 
+### 3.散点图
+
+散点图可以帮助我们推断出变量间的相关性
+
+#### 1.步骤
+- ECharts最基本的代码结构;引入js文件，DOM容器，初始化对象，设置option
+- x轴的数据和y轴的数据：二维数组
+  - 数组1[[身高,体重],[身高,体重],[身高,体重]...]
+
+- 图表类型：在series下设置type:scatter
+- xAxis和yAixs的type都要设置为value
+- 调整：将坐标轴都设置为脱离0值比例,scale
+
+#### 2.常见效果
+
+- 气泡效果
+  - 散点的大小不同 symbolSize
+  - 散点的颜色不同 itemStyle.color
+- 涟漪动画效果
+  - type:effectScatter
+  - showEffectOn:'emphasis'
+  - rippleEffect:{}
+
+特点：散点图可以帮助我们推断出不同维度数据之间的相关性
+
+
 ## 4.ECharts的高级使用
 
 ## 5.电商平台数据可视化实时监控系统
