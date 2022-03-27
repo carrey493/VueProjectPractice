@@ -159,6 +159,49 @@ ECharts能满足绝大多数可视化图表实现
 
 特点：散点图可以帮助我们推断出不同维度数据之间的相关性
 
+### 4.直角坐标系通用配置
+
+直接坐标系图表：柱状图 折线图 散点图
+
+- 1.网格grid
+- 2.坐标轴axis
+- 3.区域缩放dataZoom
+
+#### 1.网格grid
+
+- grid是用控制直角坐标系的布局和大小
+- x轴和y轴就是在grid的基础上绘制的
+  - 显示grid：show
+  - grid的边框：borderWidth borderColor
+  - grid的位置和大小：width height top left right bottom
+
+#### 2.坐标轴axis
+
+坐标轴分为x轴和y轴
+
+一个grid中最多有两种位置的x轴和y轴
+
+- 坐标轴类型type
+  - value：数值轴，自动会从目标数据中读取数据
+  - category：类目轴，该类型必须通过data设置类目数据
+- 显示位置position
+  - xAxis:可取值top或者bottom
+  - xAxis:可取值left或者right
+
+#### 3.区域缩放dataZoom
+
+-  dataZoom用于区域缩放，对数据范围过滤，x轴和y轴都可以拥有
+- dataZoom是一个数组，意味着可以配置多个区域缩放器
+  - 类型type
+    - silder:滑块
+    - inside:内置，艺考鼠标滚轮或者双指缩放
+  - 指明产生作用的轴
+    - xAsisIndex：设置缩放组件控制的是哪个x轴，一般写0
+    - yAsisIndex：设置缩放组件控制的是哪个y轴，一般写0
+  - 指明初始状态的缩放情况
+    - start:数据窗口范围的起始百分比
+    - end:数据窗口范围的结束百分比
+
 
 ## 4.ECharts的高级使用
 
