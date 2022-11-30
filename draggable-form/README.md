@@ -140,7 +140,7 @@ dragStart(e) {
       if (this.viewList.length) {
         let targetIndex = 0;
         this.viewList.map((el, index) => {
-          if (this.hoverId === parseInt(el.id)) {
+          if (this.hoverId === parseInt(el.id)) {·
             targetIndex = index;
           }
         });

@@ -58,7 +58,6 @@
               :data-index="index"
               :key="item.id"
               class="item-single"
-              @click="selectType(item.id, item)"
             >
               <div v-if="hoverId === item.id" class="over-item"></div>
               <div
@@ -67,7 +66,11 @@
                 v-if="item.type === 'input'"
               >
                 <!-- {{ item.id }} -->
-                <div :id="item.id" class="item-mask"></div>
+                <div
+                  @click="selectType(item.id, item)"
+                  :id="item.id"
+                  class="item-mask"
+                ></div>
                 <div
                   v-if="selectId === item.id"
                   class="move-icon"
@@ -85,6 +88,11 @@
                     <el-input
                       v-model="item.vlaue"
                       :placeholder="item.placeholder"
+                      :size="formConfigure.size"
+                      :style="{ width: `${selectedType.width}px` }"
+                      :show-word-limit="formConfigure.wordCount"
+                      :maxlength="formConfigure.maxlength"
+                      :minlength="formConfigure.minlength"
                     ></el-input>
                   </div>
                 </div>
@@ -94,12 +102,14 @@
                     size="mini"
                     icon="el-icon-document-copy"
                     circle
+                    @click="copyItem"
                   ></el-button>
                   <el-button
                     type="danger"
                     size="mini"
                     icon="el-icon-delete"
                     circle
+                    @click="deleteItem"
                   ></el-button>
                 </div>
               </div>
@@ -109,7 +119,11 @@
                 v-if="item.type === 'select'"
               >
                 <!-- {{ item.id }} -->
-                <div :id="item.id" class="item-mask"></div>
+                <div
+                  @click="selectType(item.id, item)"
+                  :id="item.id"
+                  class="item-mask"
+                ></div>
                 <div
                   v-if="selectId === item.id"
                   class="move-icon"
@@ -152,7 +166,11 @@
                 v-if="item.type === 'switch'"
               >
                 <!-- {{ item.id }} -->
-                <div :id="item.id" class="item-mask"></div>
+                <div
+                  @click="selectType(item.id, item)"
+                  :id="item.id"
+                  class="item-mask"
+                ></div>
                 <div
                   v-if="selectId === item.id"
                   class="move-icon"
@@ -193,7 +211,11 @@
                 :class="{ 'select-item': selectId === item.id }"
                 v-if="item.type === 'radio'"
               >
-                <div :id="item.id" class="item-mask"></div>
+                <div
+                  @click="selectType(item.id, item)"
+                  :id="item.id"
+                  class="item-mask"
+                ></div>
                 <div
                   v-if="selectId === item.id"
                   class="move-icon"
@@ -233,7 +255,11 @@
                 v-if="item.type === 'date'"
               >
                 <!-- {{ item.id }} -->
-                <div :id="item.id" class="item-mask"></div>
+                <div
+                  @click="selectType(item.id, item)"
+                  :id="item.id"
+                  class="item-mask"
+                ></div>
                 <div
                   v-if="selectId === item.id"
                   class="move-icon"
@@ -254,6 +280,51 @@
                       placeholder="选择日期"
                     >
                     </el-date-picker>
+                  </div>
+                </div>
+                <div v-if="selectId === item.id" class="content-operate">
+                  <el-button
+                    type="primary"
+                    size="mini"
+                    icon="el-icon-document-copy"
+                    circle
+                  ></el-button>
+                  <el-button
+                    type="danger"
+                    size="mini"
+                    icon="el-icon-delete"
+                    circle
+                  ></el-button>
+                </div>
+              </div>
+              <div
+                class="type-color item-type"
+                :class="{ 'select-item': selectId === item.id }"
+                v-if="item.type === 'color'"
+              >
+                <div
+                  @click="selectType(item.id, item)"
+                  :id="item.id"
+                  class="item-mask"
+                ></div>
+                <div
+                  v-if="selectId === item.id"
+                  class="move-icon"
+                  title="拖拽移动"
+                >
+                  <i class="el-icon-sort"></i>
+                </div>
+                <div class="item-content">
+                  <div class="content-title">
+                    <span :style="{ float: formConfigure.position }"
+                      >颜色选择器</span
+                    >
+                  </div>
+                  <div class="content-component">
+                    <el-color-picker
+                      v-model="item.value"
+                      show-alpha
+                    ></el-color-picker>
                   </div>
                 </div>
                 <div v-if="selectId === item.id" class="content-operate">
@@ -307,9 +378,70 @@
               <p><el-input v-model="selectedType.title"></el-input></p>
               <p>提示信息</p>
               <p><el-input v-model="selectedType.info"></el-input></p>
+              <p>输入框宽度</p>
+              <p><el-input v-model="selectedType.width"></el-input></p>
             </div>
             <div class="attribute-config">
               <el-divider>属性配置</el-divider>
+              <p>是否必填</p>
+              <p>
+                <el-switch
+                  v-model="selectedType.switch"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                >
+                </el-switch>
+              </p>
+              <p>类型</p>
+              <p>
+                <el-select v-model="selectedType.mode" placeholder="请选择">
+                  <el-option
+                    v-for="sub in selectedType.options"
+                    :key="sub.value"
+                    :label="sub.label"
+                    :value="sub.value"
+                  >
+                  </el-option>
+                </el-select>
+              </p>
+              <p>最大输入长度</p>
+              <p>
+                <el-input
+                  size="mini"
+                  v-model="selectedType.maxlength"
+                  class="input-with-select"
+                  ><el-button
+                    slot="prepend"
+                    icon="el-icon-minus"
+                    @click="minusMaxlength"
+                  ></el-button>
+                  <el-button
+                    slot="append"
+                    icon="el-icon-plus"
+                    @click="plusMaxlength"
+                  ></el-button>
+                </el-input>
+              </p>
+              <p>最小输入长度</p>
+              <p>
+                <el-input
+                  disabled
+                  size="mini"
+                  v-model="selectedType.minlength"
+                  class="input-with-select"
+                  ><el-button slot="prepend" icon="el-icon-minus"></el-button>
+                  <el-button slot="append" icon="el-icon-plus"></el-button>
+                </el-input>
+              </p>
+              <p>是否显示输入字数统计</p>
+              <p>
+                <el-switch
+                  v-model="selectedType.wordCount"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                >
+                </el-switch>
+              </p>
             </div>
             <div class="validation-rules">
               <el-divider>验证规则</el-divider>
@@ -415,6 +547,11 @@ export default {
           type: "date",
           icon: "el-icon-date",
         },
+        {
+          name: "颜色选择器",
+          type: "color",
+          icon: "el-icon-help",
+        },
       ],
       viewList: [],
       componentConfigure: "",
@@ -465,9 +602,21 @@ export default {
             id: Date.now(),
             type: "input",
             value: "",
-            placeholder: "",
+            placeholder: "请输入内容",
             title: "输入框",
             info: "",
+            width: 200,
+            switch: false,
+            mode: "",
+            options: [
+              { value: "text", label: "text" },
+              { value: "textarea", label: "textarea" },
+              { value: "number", label: "number" },
+              { value: "password", label: "password" },
+            ],
+            wordCount: false,
+            maxlength: "",
+            minlength: "",
           };
           break;
         case "select":
@@ -486,6 +635,9 @@ export default {
           break;
         case "date":
           targetObj = { id: Date.now(), type: "date", value: "" };
+          break;
+        case "color":
+          targetObj = { id: Date.now(), type: "color", value: "" };
           break;
         default:
           break;
@@ -520,7 +672,7 @@ export default {
       }
     },
     selectType(id, item) {
-      console.log(id);
+      console.log(item);
       this.selectId = id;
       this.activeName = "component";
       this.selectedType = item;
@@ -543,6 +695,59 @@ export default {
       this.selectId = "";
       this.hoverId = "";
       this.enterFlag = false;
+    },
+    copyItem() {
+      let targetItem = "";
+      let targetIndex = "";
+      this.viewList.forEach((item, index) => {
+        if (item.id === this.selectId) {
+          switch (item.type) {
+            case "input":
+              targetItem = {
+                id: Date.now(),
+                type: "input",
+                value: "",
+                placeholder: "请输入内容",
+                title: "输入框",
+                info: "",
+                width: 200,
+                switch: false,
+                mode: "123",
+                options: ["String,Array,Number,Integer"],
+                wordCount: false,
+                maxlength: "",
+                minlength: "",
+              };
+              break;
+            default:
+              break;
+          }
+          targetIndex = index;
+        }
+      });
+      this.viewList.splice(targetIndex + 1, 0, targetItem);
+    },
+    deleteItem() {
+      let targetIndex = "";
+      this.viewList.forEach((item, index) => {
+        if (item.id === this.selectId) targetIndex = index;
+      });
+      this.viewList.splice(targetIndex, 1);
+    },
+    plusMaxlength() {
+      console.log(123,this.selectType.maxlength);
+      if (this.selectType.maxlength) {
+        this.selectType.maxlength += 1;
+      } else {
+        this.selectType.maxlength = 1;
+      }
+      console.log(this.selectType.maxlength);
+    },
+    minusMaxlength() {
+      console.log(456);
+      if (this.selectType.maxlength) {
+        this.selectType.maxlength -= 1;
+      }
     },
   },
 };
@@ -573,6 +778,8 @@ export default {
     border-top: 1px solid #eeeeee;
     .left-aside {
       width: 15%;
+      overflow-y: auto;
+
       .form-component {
         .component-list {
           display: flex;
@@ -614,7 +821,7 @@ export default {
       }
       .view-content {
         width: 95%;
-        height: 630px;
+        height: calc(100vh - 170px);
         background: #ffffff;
         margin: 10px auto;
         position: relative;
@@ -684,7 +891,7 @@ export default {
               position: absolute;
               bottom: 1px;
               right: 1px;
-              z-index: 11;
+              z-index: 111;
             }
           }
         }
@@ -698,6 +905,7 @@ export default {
     }
     .right-aside {
       width: 20%;
+      overflow-y: auto;
       .config-title {
         width: 100%;
         height: 50px;
@@ -707,12 +915,14 @@ export default {
           line-height: 50px;
           text-align: center;
           font-weight: bold;
+          cursor: pointer;
         }
         .form-title {
           flex: 1;
           line-height: 50px;
           text-align: center;
           font-weight: bold;
+          cursor: pointer;
         }
         .active-config {
           color: #2e73ff;
