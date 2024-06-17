@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"] // 仅作联想提示
     }
   },
   "exclude": ["node_modules", "dist"]
