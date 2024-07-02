@@ -8,6 +8,8 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
+import { visualizer } from "rollup-plugin-visualizer";
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -22,6 +24,12 @@ export default defineConfig({
           importStyle: "sass",
         }),
       ],
+    }),
+    visualizer({
+      open: true, //注意这里要设置为true，否则无效
+      filename: "stats.html", //分析图生成的文件名
+      gzipSize: true, // 收集 gzip 大小并将其显示
+      brotliSize: true, // 收集 brotli 大小并将其显示
     }),
   ],
   resolve: {
