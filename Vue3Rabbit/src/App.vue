@@ -1,7 +1,6 @@
 <script setup></script>
 
 <template>
-  <div class="test">test scss</div>
   <!-- 一级路由出口组件 -->
   <RouterView />
 </template>
