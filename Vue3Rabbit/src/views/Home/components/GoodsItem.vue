@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  goods: {
+  good: {
     type: Object,
     default: () => {},
   },
