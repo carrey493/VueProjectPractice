@@ -297,7 +297,7 @@ export default {
       //记录单条数据的高度
       oneHeight: 100,
       //数据请求的Url
-      requestUrl: "http://localhost:4000/data?num=",
+      requestUrl: "http://localhost:4000/data?num=1000",
       //单次请求数据的条数
       oneRequestDataLength: 20,
     };
