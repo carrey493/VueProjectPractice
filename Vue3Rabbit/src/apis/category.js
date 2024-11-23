@@ -6,8 +6,6 @@ import request from "@/utils/http.js";
  * @return {*}
  */
 export const getTopCategoryAPI = (id) => {
-  console.log(id, 88888);
-
   return request({
     url: "/category",
     params: {
