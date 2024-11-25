@@ -1,5 +1,13 @@
 # vue-rabbit
 
+![](https://img2024.cnblogs.com/blog/2332774/202411/2332774-20241125210810696-1042050437.png)
+
+![](https://img2024.cnblogs.com/blog/2332774/202411/2332774-20241125210853366-1041688177.png)
+
+![](https://img2024.cnblogs.com/blog/2332774/202411/2332774-20241125210904400-1814449566.png)
+
+![](https://img2024.cnblogs.com/blog/2332774/202411/2332774-20241125210912733-493386074.png)
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
