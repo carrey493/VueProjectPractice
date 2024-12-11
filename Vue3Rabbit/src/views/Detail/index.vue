@@ -2,6 +2,7 @@
 import { getDetail } from "@/apis/detail.js";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import DetailHots from "./components/DetailHots.vue";
 const goods = ref({});
 const route = useRoute();
 const getGoods = async () => {
@@ -14,7 +15,7 @@ onMounted(() => getGoods());
 <template>
   <div class="xtx-goods-page">
     <div class="container">
-      <div class="bread-container">
+      <div class="bread-container" v-if="goods.name">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <!-- 
@@ -59,7 +60,7 @@ onMounted(() => getGoods());
                 </li>
                 <li>
                   <p>品牌信息</p>
-                  <p>{{ goods.brand.name }}+</p>
+                  <p>{{ goods.brand?.name }}+</p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                 </li>
               </ul>
@@ -108,7 +109,7 @@ onMounted(() => getGoods());
                   <!-- 属性 -->
                   <ul class="attrs">
                     <li
-                      v-for="item in goods.details.properties"
+                      v-for="item in goods.details?.properties"
                       :key="item.value"
                     >
                       <span class="dt">{{ item.name }}</span>
@@ -117,7 +118,7 @@ onMounted(() => getGoods());
                   </ul>
                   <!-- 图片 -->
                   <img
-                    v-for="img in goods.details.pictures"
+                    v-for="img in goods.details?.pictures"
                     :src="img"
                     :key="img"
                     alt=""
@@ -126,7 +127,12 @@ onMounted(() => getGoods());
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
-            <div class="goods-aside"></div>
+            <div class="goods-aside">
+              <!-- 24小时热榜 -->
+              <DetailHots />
+              <!-- 周热榜 -->
+              <DetailHots />
+            </div>
           </div>
         </div>
       </div>

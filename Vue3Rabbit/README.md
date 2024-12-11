@@ -8,6 +8,8 @@
 
 ![](https://img2024.cnblogs.com/blog/2332774/202411/2332774-20241125210912733-493386074.png)
 
+![](https://img2024.cnblogs.com/blog/2332774/202412/2332774-20241211204428161-1287266098.png)
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
