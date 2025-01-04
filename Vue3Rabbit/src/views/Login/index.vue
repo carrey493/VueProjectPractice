@@ -1,6 +1,10 @@
 <script setup>
 import { ref } from "vue";
-
+import { useRouter } from "vue-router";
+import { loginAPI } from "@/apis/user";
+import { ElMessage } from "element-plus";
+import "element-plus/theme-chalk/el-message.css";
+const router = useRouter();
 // 表单校验
 const form = ref({
   account: "",
@@ -34,13 +38,21 @@ const rules = ref({
 // 获取实例
 const formRef = ref(null);
 const login = () => {
+  const { account, password } = form.value;
   // 调用方法
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
     if (valid) {
       // 所有表单规则验证通过才为true
-      console.log("验证成功");
+      // xiaotuxian001 123465
+      const res = await loginAPI({ account, password });
+      if (res.code === "1") {
+        ElMessage.success("登录成功");
+        router.replace("/");
+      } else {
+        ElMessage.error("登录失败：" + res.msg);
+      }
     } else {
-      console.log("验证失败");
+      ElMessage.info("账号信息不正确，请检查后重新输入！");
       return false;
     }
   });
