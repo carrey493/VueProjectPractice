@@ -1,4 +1,21 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+// 表单校验
+const form = ref({
+  account: "",
+  password: "",
+});
+
+// 规则对象
+const rules = ref({
+  account: [{ required: true, message: "请输入账户", trigger: "blur" }],
+  password: [
+    { required: true, message: "请输入密码", trigger: "blur" },
+    { min: 6, max: 20, message: "密码长度在 6 到 20 个字符", trigger: "blur" },
+  ],
+});
+</script>
 
 <template>
   <div>
@@ -21,12 +38,18 @@
         </nav>
         <div class="account-box">
           <div class="form">
-            <el-form label-position="right" label-width="60px" status-icon>
-              <el-form-item label="账户">
-                <el-input />
+            <el-form
+              :model="form"
+              :rules="rules"
+              label-position="right"
+              label-width="60px"
+              status-icon
+            >
+              <el-form-item prop="account" label="账户">
+                <el-input v-model="form.account" />
               </el-form-item>
-              <el-form-item label="密码">
-                <el-input />
+              <el-form-item prop="password" label="密码">
+                <el-input v-model="form.password" />
               </el-form-item>
               <el-form-item label-width="22px">
                 <el-checkbox size="large">
