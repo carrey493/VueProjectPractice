@@ -10,10 +10,10 @@ const form = ref({
 
 // 规则对象
 const rules = ref({
-  account: [{ required: true, message: "请输入账户", trigger: "blur" }],
+  account: [{ required: true, message: "请输入账号名称", trigger: "blur" }],
   password: [
     { required: true, message: "请输入密码", trigger: "blur" },
-    { min: 6, max: 20, message: "密码长度在 6 到 20 个字符", trigger: "blur" },
+    { min: 6, max: 20, message: "请输入6 到 20 个字符的密码", trigger: "blur" },
   ],
   agree: [
     {
@@ -30,6 +30,21 @@ const rules = ref({
     },
   ],
 });
+
+// 获取实例
+const formRef = ref(null);
+const login = () => {
+  // 调用方法
+  formRef.value.validate((valid) => {
+    if (valid) {
+      // 所有表单规则验证通过才为true
+      console.log("验证成功");
+    } else {
+      console.log("验证失败");
+      return false;
+    }
+  });
+};
 </script>
 
 <template>
@@ -58,6 +73,7 @@ const rules = ref({
               :rules="rules"
               label-position="right"
               label-width="60px"
+              ref="formRef"
               status-icon
             >
               <el-form-item prop="account" label="账户">
@@ -71,7 +87,9 @@ const rules = ref({
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="login"
+                >点击登录</el-button
+              >
             </el-form>
           </div>
         </div>
