@@ -1,7 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { loginAPI } from "@/apis/user";
+import { useUserStore } from "@/stores/user";
+const userStore = useUserStore();
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
 const router = useRouter();
@@ -44,13 +45,14 @@ const login = () => {
     if (valid) {
       // 所有表单规则验证通过才为true
       // xiaotuxian001 123465
-      const res = await loginAPI({ account, password });
-      if (res.code === "1") {
-        ElMessage.success("登录成功");
-        router.replace("/");
-      } else {
-        ElMessage.error("登录失败：" + res.msg);
-      }
+      userStore.getUserInfo({ account, password }).then((res) => {
+        if (res.code === "1") {
+          ElMessage.success("登录成功");
+          router.replace("/");
+        } else {
+          ElMessage.error("登录失败：" + res.msg);
+        }
+      });
     } else {
       ElMessage.info("账号信息不正确，请检查后重新输入！");
       return false;
