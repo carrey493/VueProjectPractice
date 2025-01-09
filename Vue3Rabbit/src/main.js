@@ -8,6 +8,7 @@ import router from "./router";
 import "./styles/common.scss";
 
 // 引入懒加载指令插件并且注册
+import "virtual:svg-icons-register";
 import { lazyPlugin } from "./directives";
 
 import { componentPlugin } from "@/components";

@@ -10,6 +10,12 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 import { visualizer } from "rollup-plugin-visualizer";
 
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
+
+import * as path from "path";
+
+import process from "process";
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -30,6 +36,11 @@ export default defineConfig({
       filename: "stats.html", //分析图生成的文件名
       gzipSize: true, // 收集 gzip 大小并将其显示
       brotliSize: true, // 收集 brotli 大小并将其显示
+    }),
+    createSvgIconsPlugin({
+      // 指定需要缓存的图标文件夹
+      iconDirs: [path.resolve(process.cwd(), "src/assets/svg")],
+      symbolId: "icon-[dir]-[name]",
     }),
   ],
   resolve: {
