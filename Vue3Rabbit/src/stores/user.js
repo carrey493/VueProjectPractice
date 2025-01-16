@@ -13,10 +13,16 @@ export const useUserStore = defineStore(
       userInfo.value = res.result;
       return res;
     };
+
+    // 退出登录时清楚用户中心
+    const clearUserInfo = () => {
+      userInfo.value = {};
+    };
     // 3. 以对象的格式把state和action return
     return {
       userInfo,
       getUserInfo,
+      clearUserInfo,
     };
   },
   {

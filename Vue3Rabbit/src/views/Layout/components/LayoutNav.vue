@@ -1,6 +1,15 @@
 <script setup>
 import { useUserStore } from "@/stores/user";
+import { useRouter } from "vue-router";
 const userStore = useUserStore();
+const router = useRouter();
+const onConfirm = () => {
+  // 退出登录业务逻辑实现
+  // 1. 清除用户信息
+  userStore.clearUserInfo();
+  // 2. 跳转到登录页
+  router.push("/login");
+};
 </script>
 
 <template>
@@ -21,6 +30,7 @@ const userStore = useUserStore();
               title="确认退出吗?"
               confirm-button-text="确认"
               cancel-button-text="取消"
+              @confirm="onConfirm"
             >
               <template #reference>
                 <a href="javascript:;">退出登录</a>
