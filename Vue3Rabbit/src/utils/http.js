@@ -1,5 +1,6 @@
 // axios基础封装
 import axios from "axios";
+import router from "@/router";
 import { ElMessage } from "element-plus";
 const baseUrl = "http://pcapi-xiaotuxian-front-devtest.itheima.net";
 import { useUserStore } from "@/stores/user";
@@ -29,8 +30,19 @@ httpInstance.interceptors.response.use(
     return Promise.resolve(res.data);
   },
   (e) => {
+    const userStore = useUserStore();
     ElMessage.warning(e.response.data.message);
-    Promise.reject(e);
+    // 404token失效处理
+    /* 
+     1. 清除本地用户数据
+     2. 跳转登录页
+    */
+    if (e.response.status === 401) {
+      userStore.clearUserInfo();
+      router.push("/login");
+    } else {
+      Promise.reject(e);
+    }
   }
 );
 
