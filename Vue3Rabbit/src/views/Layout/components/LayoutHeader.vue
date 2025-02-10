@@ -1,5 +1,6 @@
 <script setup>
 import { useCategoryStore } from "@/stores/category";
+import HeaderCart from "./HeaderCart.vue";
 
 //使用pinan中的数据
 const categoryStore = useCategoryStore();
@@ -30,6 +31,7 @@ const categoryStore = useCategoryStore();
         <input type="text" placeholder="搜一搜" />
       </div>
       <!-- 头部购物车 -->
+      <HeaderCart />
     </div>
   </header>
 </template>
