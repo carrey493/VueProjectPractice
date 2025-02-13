@@ -18,7 +18,12 @@ export const useCartStore = defineStore(
       }
     };
 
-    return { cartList, addCart };
+    const delCart = (skuId) => {
+      const index = cartList.value.findIndex((item) => skuId === item.skuId);
+      if (index !== -1) cartList.value.splice(index, 1);
+    };
+
+    return { cartList, addCart, delCart };
   },
   {
     persist: true,
