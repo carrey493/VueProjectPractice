@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export const useCartStore = defineStore(
   "cart",
@@ -18,12 +18,24 @@ export const useCartStore = defineStore(
       }
     };
 
+    // 删除商品
     const delCart = (skuId) => {
       const index = cartList.value.findIndex((item) => skuId === item.skuId);
       if (index !== -1) cartList.value.splice(index, 1);
     };
 
-    return { cartList, addCart, delCart };
+    // 计算总的属性与价格
+    const allCount = computed(() =>
+      cartList.value.reduce((prev, item) => prev + item.count, 0)
+    );
+    const allPrice = computed(() =>
+      cartList.value.reduce(
+        (prev, item) => prev + item.count * parseInt(item.price),
+        0
+      )
+    );
+
+    return { cartList, addCart, delCart, allCount, allPrice };
   },
   {
     persist: true,
