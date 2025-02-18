@@ -35,7 +35,13 @@ export const useCartStore = defineStore(
       )
     );
 
-    return { cartList, addCart, delCart, allCount, allPrice };
+    // 单选功能
+    const singleCheck = (skuId, selected) => {
+      const item = cartList.value.find((item) => skuId === item.skuId);
+      item.selected = selected;
+    };
+
+    return { cartList, addCart, delCart, allCount, allPrice, singleCheck };
   },
   {
     persist: true,
