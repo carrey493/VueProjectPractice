@@ -41,7 +41,26 @@ export const useCartStore = defineStore(
       item.selected = selected;
     };
 
-    return { cartList, addCart, delCart, allCount, allPrice, singleCheck };
+    // 全选功能
+    const allCheck = (selected) => {
+      cartList.value.forEach((item) => (item.selected = selected));
+    };
+
+    // 是否全选
+    const isAll = computed(() => {
+      return cartList.value.every((item) => item.selected);
+    });
+
+    return {
+      cartList,
+      addCart,
+      delCart,
+      allCount,
+      allPrice,
+      singleCheck,
+      isAll,
+      allCheck,
+    };
   },
   {
     persist: true,
