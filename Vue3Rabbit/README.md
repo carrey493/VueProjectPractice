@@ -1,5 +1,7 @@
 # vue-rabbit
 
+学习地址：https://www.bilibili.com/video/BV1Ac411K7EQ
+
 ![](https://img2024.cnblogs.com/blog/2332774/202411/2332774-20241125210810696-1042050437.png)
 
 ![](https://img2024.cnblogs.com/blog/2332774/202411/2332774-20241125210853366-1041688177.png)

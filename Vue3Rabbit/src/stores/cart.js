@@ -24,15 +24,30 @@ export const useCartStore = defineStore(
       if (index !== -1) cartList.value.splice(index, 1);
     };
 
-    // 计算总的属性与价格
+    // 计算总的数量与价格
     const allCount = computed(() =>
       cartList.value.reduce((prev, item) => prev + item.count, 0)
     );
+
     const allPrice = computed(() =>
       cartList.value.reduce(
         (prev, item) => prev + item.count * parseInt(item.price),
         0
       )
+    );
+
+    // 已选择数量
+    const selectedCount = computed(() =>
+      cartList.value
+        .filter((item) => item.selected)
+        .reduce((prev, item) => prev + item.count, 0)
+    );
+
+    // 已选择商品总价
+    const selectedPrice = computed(() =>
+      cartList.value
+        .filter((item) => item.selected)
+        .reduce((prev, item) => prev + item.count * parseInt(item.price), 0)
     );
 
     // 单选功能
@@ -60,6 +75,8 @@ export const useCartStore = defineStore(
       singleCheck,
       isAll,
       allCheck,
+      selectedCount,
+      selectedPrice,
     };
   },
   {
