@@ -24,7 +24,7 @@ export const useCartStore = defineStore(
         if (item) {
           item.count++;
         } else {
-          cartList.value.pu2sh(goods);
+          cartList.value.push(goods);
         }
       }
     };
@@ -106,6 +106,7 @@ export const useCartStore = defineStore(
       selectedCount,
       selectedPrice,
       clearCart,
+      updateNewList,
     };
   },
   {
