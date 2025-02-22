@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useUserStore } from "./user";
-import { insertCartAPI, findNewCartListAPI } from "@/apis/cart.js";
+import { insertCartAPI, findNewCartListAPI, delCartAPI } from "@/apis/cart.js";
 
 export const useCartStore = defineStore(
   "cart",
@@ -18,8 +18,7 @@ export const useCartStore = defineStore(
       if (isLogin.value) {
         // 登录状态下，添加购物车操作
         await insertCartAPI({ skuId, count });
-        const res = await findNewCartListAPI();
-        cartList.value = res.result;
+        updateNewList();
       } else {
         const item = cartList.value.find((item) => goods.skuId === item.skuId);
         if (item) {
@@ -31,9 +30,21 @@ export const useCartStore = defineStore(
     };
 
     // 删除商品
-    const delCart = (skuId) => {
-      const index = cartList.value.findIndex((item) => skuId === item.skuId);
-      if (index !== -1) cartList.value.splice(index, 1);
+    const delCart = async (skuId) => {
+      if (isLogin.value) {
+        // 登录状态下，删除购物车操作
+        await delCartAPI([skuId]);
+        updateNewList();
+      } else {
+        const index = cartList.value.findIndex((item) => skuId === item.skuId);
+        if (index !== -1) cartList.value.splice(index, 1);
+      }
+    };
+
+    // 获取最新购物车列表
+    const updateNewList = async () => {
+      const res = await findNewCartListAPI();
+      cartList.value = res.result;
     };
 
     // 计算总的数量与价格
