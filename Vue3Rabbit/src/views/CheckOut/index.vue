@@ -17,6 +17,16 @@ const showDialog = ref(false);
 onMounted(() => {
   getCheckInfo();
 });
+// 切换地址
+const activeAddress = ref({});
+const switchAddress = (item) => {
+  activeAddress.value = item;
+};
+const confirm = () => {
+  showDialog.value = false;
+  curAddress.value = activeAddress.value;
+  activeAddress.value = {};
+};
 </script>
 
 <template>
@@ -137,7 +147,11 @@ onMounted(() => {
       <div
         class="text item"
         v-for="item in checkInfo.userAddresses"
+        @click="switchAddress(item)"
         :key="item.id"
+        :class="{
+          active: item.id === activeAddress.id,
+        }"
       >
         <ul>
           <li>
@@ -150,8 +164,8 @@ onMounted(() => {
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <el-button>取消</el-button>
-        <el-button type="primary">确定</el-button>
+        <el-button @click="showDialog = false">取消</el-button>
+        <el-button @click="confirm" type="primary">确定</el-button>
       </span>
     </template>
   </el-dialog>
