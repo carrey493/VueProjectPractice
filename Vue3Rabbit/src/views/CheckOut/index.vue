@@ -15,7 +15,7 @@ const getCheckInfo = async () => {
   const item = checkInfo.value.userAddresses.find(
     (item) => item.isDefault === 0
   );
-  curAddress.value = item;
+  curAddress.value = item ? item : { id: 1 };
 };
 const showDialog = ref(false);
 onMounted(() => {

@@ -20,9 +20,7 @@ const skuChange = (sku) => {
 };
 
 const count = ref(1);
-const countChange = (val) => {
-  console.log(val);
-};
+const countChange = () => {};
 // 添加购物车
 const addCart = () => {
   if (skuObj.skuId) {
